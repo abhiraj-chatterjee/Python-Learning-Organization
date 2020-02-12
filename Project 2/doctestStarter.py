@@ -1,5 +1,6 @@
 import os
 import platform
+import sys
 
 # Write code to get your OS name
 # Read about how to use the platform module
@@ -28,8 +29,8 @@ def findFunc(block):
     for i in range(len(block)):
       if block[i].isalpha():
         word += block[i]
-      else:
-        continue
+      elif word != '':
+        break
 
     return word
 
@@ -45,7 +46,7 @@ def filterErrors(strList):
     ['hello', 'error in module 5']
     '''
     new_list = []
-    for each in S:
+    for each in strList:
       if 'ok' not in each:
         new_list.append(each)
 
@@ -68,19 +69,18 @@ def findError(block):
     # two lines before the line where 'Error:' occurs) You will have to split this
     # line by a comma and then strip the white space to revtrieve the actual line number.
         s = li[i-2].split(',')
-        for each in s:
-
+        line = s[1].strip(' ')
+        line += ' '
+        line_number = int(line[line.index(' ')+1:line.rindex(' ')])
     # In addition, you should parse the line of code that caused the error and the
     # type of error itself, which will be the next two lines after the line number line.
     # If you are confused, debug your code and print out what each block looks like to
     # get a better idea of what's happening.
     # You should return a 3-tuple in the form of:
     #      (line number, code, error_type)
-
-
-
-
-
+        code = li[i-1].strip(' ')
+        error_type = li[i].strip(' ')
+        return (line_number, code, error_type)
 
 # Write the function to run the doctest in
 # the terminal. You should output the results
@@ -93,7 +93,12 @@ def runDoctest(pyfile, docFilename):
     # in accordance to the operating system you're using.
     # Use the getOSName() function in here.
     # You will either use python or python3 based on your OS.
-    pass
+    oper_sys = getOSName()
+    if oper_sys == 'Darwin':
+      a = 'python3 -m doctest -v ' + pyfile + ' > ' + docFilename
+    else:
+      a = 'python -m doctest -v ' + pyfile + ' > ' + docFilename
+    os.popen(a)
 
 
 # Write the function to get the output of the doctest
@@ -101,28 +106,27 @@ def runDoctest(pyfile, docFilename):
 # contains the result of the doctest.
 def getDoctestOutput(docFilename):
     # Read in the doctest output from the file
-    pass
-
-
+    doc = ''
+    doctest = open(docFilename, "r")
+    for each in doctest:
+      doc += each
     # Split your full doctest string by the string 'Trying:'
-
-
-
+    doc = doc.split('Trying:')
     # Filter the errors, store in new list
-
-
-
+    error_list = filterErrors(doc)
     # Initialize a new list, and
     # for each error in the error list,
     # append a 4-tuple in the form of:
     #      (function, line number, code, error_type)
-
-
-
+    li = []
+    for each in error_list:
+      k = findError(each)
+      func = findFunc(each)
+      if k != None:
+        li.append((func,k[0],k[1],k[2]))
     # Return that list of tuples
-
-
-
+    # return li
+    return li
 
 # Write a main function that puts together all of your code.
 # In this function, you should prompt for a Python file name to
@@ -132,12 +136,23 @@ def getDoctestOutput(docFilename):
 # for each error, format an output to present the errors that occured
 # and their associated function / line numbers / code / type.
 def main():
-    pass
-
+    f = input('Enter file to doctest: ')
+    runDoctest(f, 'out.txt')
+    li = getDoctestOutput('out.txt')
+    for each in li:
+      print()
+      print('Error in function: ' + each[0])
+      print('Line {}:'.format(each[1]))
+      print()
+      print('\t' + each[2])
+      print()
+      print(each[3])
+      print()
+      print('------------')
 
 # Uncomment the code below to make your program run.
 
-#main()
+main()
 
 
 

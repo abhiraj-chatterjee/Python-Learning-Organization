@@ -1,0 +1,62 @@
+Trying:
+    add(1,3)
+Expecting:
+    4
+ok
+Trying:
+    add(5,9)
+Expecting:
+    14
+ok
+Trying:
+    add(5, '7') # error
+Expecting:
+    12
+**********************************************************************
+File "/Users/abhirajchatterjee/Desktop/PSU Orgs/PyLO/Project 2/adder.py", line 7, in adder.add
+Failed example:
+    add(5, '7') # error
+Exception raised:
+    Traceback (most recent call last):
+      File "/usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/lib/python3.7/doctest.py", line 1329, in __run
+        compileflags, 1), test.globs)
+      File "<doctest adder.add[2]>", line 1, in <module>
+        add(5, '7') # error
+      File "/Users/abhirajchatterjee/Desktop/PSU Orgs/PyLO/Project 2/adder.py", line 16, in add
+        return ele1 + ele2
+    TypeError: unsupported operand type(s) for +: 'int' and 'str'
+Trying:
+    add([1,2], [3,4])
+Expecting:
+    [1, 2, 3, 4]
+ok
+Trying:
+    add('hello', ' world')
+Expecting:
+    'hello world'
+ok
+Trying:
+    add('string', [1,2]) # error
+Expecting:
+    ['string', 1, 2]
+**********************************************************************
+File "/Users/abhirajchatterjee/Desktop/PSU Orgs/PyLO/Project 2/adder.py", line 13, in adder.add
+Failed example:
+    add('string', [1,2]) # error
+Exception raised:
+    Traceback (most recent call last):
+      File "/usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/lib/python3.7/doctest.py", line 1329, in __run
+        compileflags, 1), test.globs)
+      File "<doctest adder.add[5]>", line 1, in <module>
+        add('string', [1,2]) # error
+      File "/Users/abhirajchatterjee/Desktop/PSU Orgs/PyLO/Project 2/adder.py", line 16, in add
+        return ele1 + ele2
+    TypeError: can only concatenate str (not "list") to str
+1 items had no tests:
+    adder
+**********************************************************************
+1 items had failures:
+   2 of   6 in adder.add
+6 tests in 2 items.
+4 passed and 2 failed.
+***Test Failed*** 2 failures.
